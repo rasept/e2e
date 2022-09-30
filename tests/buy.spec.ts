@@ -23,6 +23,8 @@ test('links on the page are availeble', async ({ page }) => {
   await expect(wildberries).toHaveURL(new RegExp('wildberries'));
   await wildberries.close();
 
+
+/*
   // Click img[alt="«Яндекс\.Маркет»"]
   const [yandex] = await Promise.all([
     page.waitForEvent('popup'),
@@ -57,4 +59,5 @@ const [vkTab] = await Promise.all([
   await expect(vkTab).toHaveURL(new RegExp('vk.com/login'));
   await vkTab.close();
 
+  */
 });
