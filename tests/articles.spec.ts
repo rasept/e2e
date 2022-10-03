@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
+import { site } from './config';
 
-const siteUrl = 'https://rasept.com';
 const articlesTitle = 'Статьи';
 const allArticles: { [url: string]: string } = {
   timol: 'Тимол',
@@ -19,20 +19,20 @@ test('check articles for text and images being visible and buttons open new tab'
     await expect(page.locator(selectorOf.articleCardTitle(title))).toBeVisible, // Проверяем видимость текст загловка 
     await expect(page.locator(selectorOf.articleCardImage(title))).toBeVisible, // Проверяем видимость картинки
   ]);
-  const checkArticlePage = async (title: string, urlRegExp: RegExp) => {
+  const checkArticlePage = async (title: string, url: string) => {
     await page.locator('.ant-card', { has: page.locator(selectorOf.articleCardTitle(title)) }).click(); // Переходим в статью
-    await expect(page).toHaveURL(urlRegExp); // Проверяем URL
+    await expect(page).toHaveURL(new RegExp(`\/${url}$`)); // Проверяем URL
     await expect(page.locator('h1')).toHaveText(title); // Проверяем текст загловка 
     await expect(page.locator(`main img[alt="${title}"]`)).toBeVisible; // Проверяем видимость картинки в статье
-    await page.goto(`${siteUrl}/articles`); // Возвращаемся на страницу "Статьи"
+    await page.goto(`${site.url}/articles`); // Возвращаемся на страницу "Статьи"
   };
 
   // Заходим на сайт
-  await page.goto(siteUrl);
+  await page.goto(site.url);
 
   // Заходим на страницу "Статьи"
   await page.locator(`ul[role="menu"] >> text=${articlesTitle}`).click();
-  await expect(page).toHaveURL(`${siteUrl}/articles`);
+  await expect(page).toHaveURL(`${site.url}/articles`);
 
   // Проверяем заголовок страницы
   await expect(page.locator('h1')).toHaveText(articlesTitle);
@@ -44,6 +44,6 @@ test('check articles for text and images being visible and buttons open new tab'
 
   // Проверяем отображение информации на странице статьи
   for (const [url, title] of Object.entries(allArticles)) {
-    await checkArticlePage(title, new RegExp(`/${url}$`));
+    await checkArticlePage(title, url);
   }
 });
