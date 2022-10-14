@@ -38,6 +38,7 @@ await vkTab1.waitForLoadState();
 await expect(vkTab1).toHaveTitle(new RegExp('VK'));
 await expect(vkTab1).toHaveURL(new RegExp('vk.com'));
 await vkTab1.close();
+/*
 
 // Переходим по кнопке "OK"
 const [okTab] = await Promise.all([
@@ -50,7 +51,7 @@ await expect(okTab).toHaveTitle(new RegExp('OK'));
 await expect(okTab).toHaveURL(new RegExp('ok.ru'));
 await okTab.close();
 
-
+*/
 // Вроде бы првоеряю видимость Яндекс карты
 await expect(page.frameLocator('iframe').locator('canvas')).toBeVisible;
 
