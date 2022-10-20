@@ -46,5 +46,5 @@ test('check articles for text and images being visible and buttons open new tab'
   for (const [url, title] of Object.entries(allArticles)) {
     await checkArticlePage(title, url);
   }
-  //перезалив
+  //перезалив.
 });
